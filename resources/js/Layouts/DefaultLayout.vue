@@ -24,13 +24,13 @@ const toggleSidebar = () => {
 const menu = [
     {
         label: 'Dashboard',
-        icon: 'ion:home-outline',
+        icon: 'mdi:view-dashboard',
         link: 'dashboard'
     },
     {
-        label: 'Dashboard',
-        icon: 'ion:home-outline',
-        link: 'dashboard'
+        label: 'Profile',
+        icon: 'mdi:account-circle',
+        link: 'profile.edit'
     }
 ]
 </script>
@@ -39,11 +39,11 @@ const menu = [
     <div :class="{ 'dark': state.isDark }">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col text-base text-neutral-700 dark:text-white">
             <!-- Nav -->
-            <nav class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+            <nav class="bg-white dark:bg-gray-800 border-b dark:border-gray-700 fixed top-0 left-0 w-full z-50">
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center gap-5">
-                            <div>
+                            <div class="hidden sm:block">
                                 <Button @click="toggleSidebar" icon="pi pi-bars" aria-label="Filter"
                                     severity="secondary" />
                             </div>
@@ -137,14 +137,15 @@ const menu = [
                 </div>
             </nav>
 
-            <div class="flex-grow flex">
+            <div class="flex-grow flex mt-[4rem]">
                 <!-- Sidebar -->
                 <aside
-                    :class="`w-[${state.sidebarCollapse ? '7rem' : '20rem'}] border-r bg-white dark:bg-gray-800 dark:border-gray-800 transition`">
-                    <div class="px-2 sm:px-4 lg:px-6">
+                    :class="`w-[${state.sidebarCollapse ? '7rem' : '20rem'}] border-r bg-white dark:bg-gray-800 dark:border-gray-800 transition hidden sm:block`">
+                    <div class="px-2 sm:px-4 lg:px-6 sticky top-[5.5rem]">
                         <ul class="my-5 space-y-2">
                             <li v-for="item in menu"
-                                class="text-lg px-2 py-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                                class="text-lg px-2 py-1 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
+                                :class="{ 'bg-gray-200 dark:bg-gray-700': route().current(item.link) }">
                                 <Link :href="route(item.link)" class="flex gap-2 items-center">
                                 <div class="m-2">
                                     <Icon :icon="item.icon" width="18" />
