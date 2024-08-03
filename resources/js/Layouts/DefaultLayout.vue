@@ -6,6 +6,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 import Button from 'primevue/button';
 import { Icon } from '@iconify/vue';
+import menu from '@/Data/menu';
 
 const showingNavigationDropdown = ref(false);
 const state = reactive({
@@ -20,24 +21,6 @@ const toggleDark = () => {
 const toggleSidebar = () => {
     state.sidebarCollapse = !state.sidebarCollapse
 }
-
-const menu = [
-    {
-        label: 'Dashboard',
-        icon: 'mdi:view-dashboard',
-        link: 'dashboard'
-    },
-    {
-        label: 'Profile',
-        icon: 'mdi:account-circle',
-        link: 'profile.edit'
-    },
-    {
-        label: 'Design System',
-        icon: 'mdi:airplane-edit',
-        link: 'design-system'
-    }
-]
 </script>
 
 <template>
