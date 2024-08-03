@@ -39,9 +39,9 @@ const handleUpdatePage = (evt: any) => {
 </script>
 
 <template>
-    <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg sm:rounded-lg">
         <!-- Header -->
-        <div class="border-b dark:border-b-gray-700 flex items-center justify-between p-2 sm:p-4">
+        <div class="border-b dark:border-b-gray-700 flex items-center justify-between p-5">
             <h1 class="font-bold text-xl">
                 <slot name="title" />
             </h1>
@@ -49,7 +49,7 @@ const handleUpdatePage = (evt: any) => {
         </div>
 
         <!-- Body -->
-        <div>
+        <div class="overflow-x-auto">
             <table class="table">
                 <thead>
                     <DatatableRow>
@@ -69,7 +69,7 @@ const handleUpdatePage = (evt: any) => {
                         <DatatableData>
                             {{ props.data?.meta.from + index }}.
                         </DatatableData>
-                        <DatatableData v-for="(key, indexKey) in data?.column">
+                        <DatatableData v-for="(key, indexKey) in data?.column" class="min-w-52 sm:min-w-max">
                             <span v-html="formatValue(item[key], key, item)"></span>
                         </DatatableData>
                         <DatatableData class="text-end">
@@ -81,7 +81,7 @@ const handleUpdatePage = (evt: any) => {
         </div>
 
         <!-- Footer -->
-        <div class="border-t dark:border-t-gray-700 p-2 sm:p-4">
+        <div class="border-t dark:border-t-gray-700 p-5">
             <Pagination :links="props.data?.links" :meta="props.data?.meta" @page-changed="handleUpdatePage" />
         </div>
     </div>

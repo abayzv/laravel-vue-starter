@@ -50,7 +50,7 @@ const data = computed(() => {
 
     <DefaultLayout>
         <div class="py-6">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Datatable :data="data">
                     <template #title>
                         Management Trip

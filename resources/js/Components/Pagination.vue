@@ -51,7 +51,7 @@ const handleUpdatePerPage = (e: any) => {
 
 
 <template>
-    <div class="flex items-center justify-between">
+    <div class="flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
         <div class="text-neutral-500">
             Showing {{ meta.from }} to {{ meta.to }} of {{ meta.total }} data
         </div>
