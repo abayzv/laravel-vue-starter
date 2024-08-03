@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TripEntry;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -46,5 +47,12 @@ class DatabaseSeeder extends Seeder
         $superadmin->assignRole('superadmin');
         $user1->assignRole('admin');
         $user2->assignRole('driver');
+
+        $this->call([
+            OutletSeeder::class,
+            VehicleSeeder::class,
+            TripSeeder::class,
+            TripEntrySeeder::class
+        ]);
     }
 }

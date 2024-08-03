@@ -20,7 +20,8 @@ class TripFactory extends Factory
             'user_id' => 3,
             'departure_date' => fake()->date(),
             'departure_time' => fake()->time(),
-            'stock' => fake()->numberBetween(200, 300)
+            'stock' => fake()->numberBetween(200, 300),
+            'vehicle_id' => fake()->numberBetween(1, 5)
         ];
     }
 }
