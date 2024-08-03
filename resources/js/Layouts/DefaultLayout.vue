@@ -50,7 +50,7 @@ const menu = [
                         <div class="flex items-center gap-5">
                             <div class="hidden sm:block">
                                 <Button @click="toggleSidebar" icon="pi pi-bars" aria-label="Filter"
-                                    severity="secondary" />
+                                    severity="secondary" outlined />
                             </div>
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
@@ -63,7 +63,7 @@ const menu = [
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <Button @click="toggleDark" :icon="`${state.isDark ? 'pi pi-moon' : 'pi pi-sun'}`"
-                                aria-label="Filter" severity="secondary" />
+                                aria-label="Filter" severity="secondary" outlined />
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
                                 <Dropdown align="right" width="48">
