@@ -18,7 +18,8 @@ const data = computed(() => {
             driver: 'Driver',
             departure_date: 'Tanggal Berangkat',
             departure_time: 'Jam Berangkat',
-            vehicle: 'Kendaraan'
+            vehicle: 'Kendaraan',
+            stock: 'Stock'
         },
         format: {
             driver: (val: any) => val.name,

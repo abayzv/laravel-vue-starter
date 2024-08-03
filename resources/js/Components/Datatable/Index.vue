@@ -53,6 +53,9 @@ const handleUpdatePage = (evt: any) => {
             <table class="table">
                 <thead>
                     <DatatableRow>
+                        <DatatableHeader>
+                            #
+                        </DatatableHeader>
                         <DatatableHeader v-for="item in data?.column">
                             {{ data?.labels[item] || item }}
                         </DatatableHeader>
@@ -63,8 +66,11 @@ const handleUpdatePage = (evt: any) => {
                 </thead>
                 <tbody>
                     <DatatableRow v-for="(item, index) in data?.data">
+                        <DatatableData>
+                            {{ props.data?.meta.from + index }}.
+                        </DatatableData>
                         <DatatableData v-for="(key, indexKey) in data?.column">
-                            {{ formatValue(item[key], key, item) }}
+                            <span v-html="formatValue(item[key], key, item)"></span>
                         </DatatableData>
                         <DatatableData class="text-end">
                             <SplitButton size="small" label="Action" :model="itemAction(item)" severity="secondary" />

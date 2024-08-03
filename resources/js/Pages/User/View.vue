@@ -7,6 +7,7 @@ import { computed, PropType } from 'vue';
 
 const props = defineProps({
     data: Object,
+    filters: Object,
 })
 
 const data = computed(() => {
@@ -19,7 +20,19 @@ const data = computed(() => {
             created_at: 'Tanggal Pembuatan'
         },
         format: {
-            created_at: (val: any) => new Date(val).toLocaleDateString()
+            created_at: (val: any) => new Date(val).toLocaleDateString(),
+            role: (val: any) => {
+                switch (val) {
+                    case 'superadmin':
+                        return `<span class="bg-purple-500 text-white py-2 px-5 rounded-full text-sm w-32 block text-center">${val}</span>`
+                    case 'admin':
+                        return `<span class="bg-sky-500 text-white py-2 px-5 rounded-full text-sm w-32 block text-center">${val}</span>`
+                    case 'driver':
+                        return `<span class="bg-yellow-500 text-white py-2 px-5 rounded-full text-sm w-32 block text-center">${val}</span>`
+                    default:
+                        return val
+                }
+            }
         },
         actions: [
             {
@@ -35,6 +48,7 @@ const data = computed(() => {
         ],
         links: props.data?.links,
         meta: props.data?.meta,
+        filters: props.filters
     } as DatatableOptions
 })
 </script>

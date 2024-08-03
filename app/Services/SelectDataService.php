@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Vehicle;
+use Spatie\Permission\Models\Role;
 
 class SelectDataService
 {
@@ -23,6 +24,16 @@ class SelectDataService
             return [
                 'label' => $vehicle->name,
                 'value' => $vehicle->id
+            ];
+        });
+    }
+
+    public static function getRoles()
+    {
+        return Role::all()->map(function ($role) {
+            return [
+                'label' => $role->name,
+                'value' => $role->id
             ];
         });
     }

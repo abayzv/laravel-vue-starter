@@ -2,13 +2,7 @@
 import { computed, defineProps, defineEmits } from 'vue'
 import { Icon } from '@iconify/vue';
 import type { Meta } from '@/types/datatable';
-
-interface Link {
-    url: string | null;
-    label: string;
-    active: boolean;
-}
-
+import { router } from '@inertiajs/vue3';
 
 const props = defineProps<{
     links: {
@@ -49,42 +43,58 @@ const changePage = (url: string | null) => {
         emit('page-changed', url)
     }
 }
+
+const handleUpdatePerPage = (e: any) => {
+    router.get('', { 'per_page': e.target.value })
+}
 </script>
 
 
 <template>
-    <nav v-if="meta">
-        <ul class="pagination">
-            <!-- <li :class="{ 'disabled': !links.first }" class="page-item">
+    <div class="flex items-center justify-between">
+        <div class="text-neutral-500">
+            Showing {{ meta.from }} to {{ meta.to }} of {{ meta.total }} data
+        </div>
+        <nav v-if="meta" class="flex gap-2">
+            <select :value="meta.per_page"
+                class="w-full rounded border-gray-300 focus:ring-0 focus:outline-none focus:border-gray-400"
+                @change="handleUpdatePerPage">
+                <option v-for="data in ['5', '10', '25', '50']">
+                    {{ data }}
+                </option>
+            </select>
+            <ul class="pagination">
+                <!-- <li :class="{ 'disabled': !links.first }" class="page-item">
                 <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.first)">
                     <Icon icon="mdi:chevron-double-left" />
                 </a>
             </li> -->
-            <li :class="{ 'disabled': !meta.links[0].url }" class="page-item">
-                <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(meta.links[0].url)">
-                    <Icon icon="mdi:chevron-left" />
-                </a>
-            </li>
+                <li :class="{ 'disabled': !meta.links[0].url }" class="page-item">
+                    <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(meta.links[0].url)">
+                        <Icon icon="mdi:chevron-left" />
+                    </a>
+                </li>
 
-            <li v-for="link in displayLinks" :key="link.label" :class="{ 'active': link.active, 'disabled': !link.url }"
-                class="page-item">
-                <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(link.url)"
-                    v-html="link.label"></a>
-            </li>
+                <li v-for="link in displayLinks" :key="link.label"
+                    :class="{ 'active': link.active, 'disabled': !link.url }" class="page-item">
+                    <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(link.url)"
+                        v-html="link.label"></a>
+                </li>
 
-            <li :class="{ 'disabled': !meta.links[meta.links.length - 1].url }" class="page-item">
-                <a class="page-link bg-gray-50 dark:bg-gray-700"
-                    @click.prevent="changePage(meta.links[meta.links.length - 1].url)">
-                    <Icon icon="mdi:chevron-right" />
-                </a>
-            </li>
-            <!-- <li :class="{ 'disabled': !links.last }" class="page-item">
+                <li :class="{ 'disabled': !meta.links[meta.links.length - 1].url }" class="page-item">
+                    <a class="page-link bg-gray-50 dark:bg-gray-700"
+                        @click.prevent="changePage(meta.links[meta.links.length - 1].url)">
+                        <Icon icon="mdi:chevron-right" />
+                    </a>
+                </li>
+                <!-- <li :class="{ 'disabled': !links.last }" class="page-item">
                 <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.last)">
                     <Icon icon="mdi:chevron-double-right" />
                 </a>
             </li> -->
-        </ul>
-    </nav>
+            </ul>
+        </nav>
+    </div>
 </template>
 
 <style scoped>
