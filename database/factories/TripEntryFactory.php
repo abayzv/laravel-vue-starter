@@ -20,7 +20,7 @@ class TripEntryFactory extends Factory
             'trip_id' => fake()->numberBetween(1, 15),
             'outlet_id' => fake()->numberBetween(1, 10),
             'quantity' => fake()->numberBetween(10, 30),
-            'price' => fake()->numberBetween(5000, 10000),
+            'price' => fake()->randomElement([6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000]),
             'paid_status' => fake()->boolean(),
             'payment_method' => fake()->randomElement(['transfer', 'cash'])
         ];

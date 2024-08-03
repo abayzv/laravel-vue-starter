@@ -17,7 +17,7 @@ class TripFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 3,
+            'user_id' => fake()->numberBetween(3, 5),
             'departure_date' => fake()->date(),
             'departure_time' => fake()->time(),
             'stock' => fake()->numberBetween(200, 300),
