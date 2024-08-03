@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\TripEntry;
 use App\Http\Requests\StoreTripEntryRequest;
 use App\Http\Requests\UpdateTripEntryRequest;
+use App\Http\Resources\TripResource;
+use Inertia\Inertia;
 
 class TripEntryController extends Controller
 {

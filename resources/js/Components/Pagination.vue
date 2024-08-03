@@ -1,26 +1,7 @@
-<template>
-    <nav v-if="meta">
-        <ul class="pagination">
-            <li :class="{ 'disabled': !meta.links[0].url }" class="page-item">
-                <a class="page-link" href="#" @click.prevent="changePage(meta.links[0].url)"
-                    v-html="meta.links[0].label"></a>
-            </li>
-
-            <li v-for="link in displayLinks" :key="link.label" :class="{ 'active': link.active, 'disabled': !link.url }"
-                class="page-item">
-                <a class="page-link" href="#" @click.prevent="changePage(link.url)" v-html="link.label"></a>
-            </li>
-
-            <li :class="{ 'disabled': !meta.links[meta.links.length - 1].url }" class="page-item">
-                <a class="page-link" href="#" @click.prevent="changePage(meta.links[meta.links.length - 1].url)"
-                    v-html="meta.links[meta.links.length - 1].label"></a>
-            </li>
-        </ul>
-    </nav>
-</template>
-
 <script setup lang="ts">
 import { computed, defineProps, defineEmits } from 'vue'
+import { Icon } from '@iconify/vue';
+import type { Meta } from '@/types/datatable';
 
 interface Link {
     url: string | null;
@@ -28,16 +9,6 @@ interface Link {
     active: boolean;
 }
 
-interface Meta {
-    current_page: number;
-    from: number;
-    last_page: number;
-    links: Link[];
-    path: string;
-    per_page: number;
-    to: number;
-    total: number;
-}
 
 const props = defineProps<{
     links: {
@@ -80,11 +51,48 @@ const changePage = (url: string | null) => {
 }
 </script>
 
+
+<template>
+    <nav v-if="meta">
+        <ul class="pagination">
+            <!-- <li :class="{ 'disabled': !links.first }" class="page-item">
+                <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.first)">
+                    <Icon icon="mdi:chevron-double-left" />
+                </a>
+            </li> -->
+            <li :class="{ 'disabled': !meta.links[0].url }" class="page-item">
+                <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(meta.links[0].url)">
+                    <Icon icon="mdi:chevron-left" />
+                </a>
+            </li>
+
+            <li v-for="link in displayLinks" :key="link.label" :class="{ 'active': link.active, 'disabled': !link.url }"
+                class="page-item">
+                <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(link.url)"
+                    v-html="link.label"></a>
+            </li>
+
+            <li :class="{ 'disabled': !meta.links[meta.links.length - 1].url }" class="page-item">
+                <a class="page-link bg-gray-50 dark:bg-gray-700"
+                    @click.prevent="changePage(meta.links[meta.links.length - 1].url)">
+                    <Icon icon="mdi:chevron-right" />
+                </a>
+            </li>
+            <!-- <li :class="{ 'disabled': !links.last }" class="page-item">
+                <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.last)">
+                    <Icon icon="mdi:chevron-double-right" />
+                </a>
+            </li> -->
+        </ul>
+    </nav>
+</template>
+
 <style scoped>
 .pagination {
     display: flex;
     list-style: none;
     padding-left: 0;
+    align-items: center;
 }
 
 .page-item {
@@ -93,6 +101,12 @@ const changePage = (url: string | null) => {
 
 .page-link {
     cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
 }
 
 .page-item.disabled .page-link {
@@ -101,5 +115,7 @@ const changePage = (url: string | null) => {
 
 .page-item.active .page-link {
     font-weight: bold;
+    background-color: #262626;
+    color: white;
 }
 </style>

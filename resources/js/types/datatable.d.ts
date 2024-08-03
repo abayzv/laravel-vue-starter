@@ -14,11 +14,18 @@ export interface Links {
 }
 
 export interface Meta {
-    current_page: string,
-    from: number,
-    last_page: number,
-    per_page: number,
-    total: number
+    current_page: number;
+    from: number;
+    last_page: number;
+    links: Link[];
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
+}
+
+export interface Filters {
+    [key: string]: any
 }
 
 export interface Action {
@@ -34,5 +41,6 @@ export interface DatatableOptions {
     format?: FormatValue,
     actions?: Action[],
     links: Links,
-    meta: Meta
+    meta: Meta,
+    filters?: Filter
 }

@@ -3,13 +3,18 @@ import Card from '@/Components/Card.vue';
 import DatatableRow from '@/Components/Datatable/Row.vue'
 import DatatableHeader from '@/Components/Datatable/Header.vue'
 import DatatableData from '@/Components/Datatable/Data.vue'
+import DatatableFilter from '@/Components/Datatable/Filter.vue'
 import SplitButton from 'primevue/splitbutton';
 import { PropType } from 'vue';
 import { DatatableOptions } from '@/types/datatable';
 import Pagination from '@/Components/Pagination.vue';
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
-    data: Object as PropType<DatatableOptions>
+    data: {
+        type: Object as PropType<DatatableOptions>,
+        required: true
+    }
 })
 
 const formatValue = (value: any, key: any, item: any) => {
@@ -28,45 +33,52 @@ const itemAction = (item: any) => {
 }
 
 const handleUpdatePage = (evt: any) => {
-    console.log(evt)
+    router.visit(evt)
 }
 
-const handleUpdateRow = (val: number) => {
-    console.log(val, 'edit row')
-}
 </script>
 
 <template>
-    <Card>
-        <template #header>
-            <h1 class="font-bold text-xl">Management User</h1>
-        </template>
-        <table class="table">
-            <thead>
-                <DatatableRow>
-                    <DatatableHeader v-for="item in data?.column">
-                        {{ data?.labels[item] || item }}
-                    </DatatableHeader>
-                    <DatatableHeader class="text-end">
-                        Action
-                    </DatatableHeader>
-                </DatatableRow>
-            </thead>
-            <tbody>
-                <DatatableRow v-for="(item, index) in data?.data">
-                    <DatatableData v-for="(key, indexKey) in data?.column">
-                        {{ formatValue(item[key], key, item) }}
-                    </DatatableData>
-                    <DatatableData class="text-end">
-                        <SplitButton size="small" label="Action" :model="itemAction(item)" severity="secondary" />
-                    </DatatableData>
-                </DatatableRow>
-            </tbody>
-        </table>
-        <template #footer>
-            <!-- <Pagination :links="props.data?.links" :meta="props.data?.meta" /> -->
-        </template>
-    </Card>
+    <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+        <!-- Header -->
+        <div class="border-b dark:border-b-gray-700 flex items-center justify-between p-2 sm:p-4">
+            <h1 class="font-bold text-xl">
+                <slot name="title" />
+            </h1>
+            <DatatableFilter :filters="props.data?.filters" />
+        </div>
+
+        <!-- Body -->
+        <div>
+            <table class="table">
+                <thead>
+                    <DatatableRow>
+                        <DatatableHeader v-for="item in data?.column">
+                            {{ data?.labels[item] || item }}
+                        </DatatableHeader>
+                        <DatatableHeader class="text-end">
+                            Action
+                        </DatatableHeader>
+                    </DatatableRow>
+                </thead>
+                <tbody>
+                    <DatatableRow v-for="(item, index) in data?.data">
+                        <DatatableData v-for="(key, indexKey) in data?.column">
+                            {{ formatValue(item[key], key, item) }}
+                        </DatatableData>
+                        <DatatableData class="text-end">
+                            <SplitButton size="small" label="Action" :model="itemAction(item)" severity="secondary" />
+                        </DatatableData>
+                    </DatatableRow>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="border-t dark:border-t-gray-700 p-2 sm:p-4">
+            <Pagination :links="props.data?.links" :meta="props.data?.meta" @page-changed="handleUpdatePage" />
+        </div>
+    </div>
 </template>
 
 <style scoped>

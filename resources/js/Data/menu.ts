@@ -10,15 +10,20 @@ const menu = [
         link: 'user.view'
     },
     {
-        label: 'Profile',
-        icon: 'mdi:account-circle',
-        link: 'profile.edit'
+        label: 'Trips',
+        icon: 'mdi:truck-delivery',
+        link: 'trip.view'
     },
-    {
-        label: 'Design System',
-        icon: 'mdi:airplane-edit',
-        link: 'design-system'
-    }
+    // {
+    //     label: 'Profile',
+    //     icon: 'mdi:account-circle',
+    //     link: 'profile.edit'
+    // },
+    // {
+    //     label: 'Design System',
+    //     icon: 'mdi:airplane-edit',
+    //     link: 'design-system'
+    // }
 ]
 
 export default menu;

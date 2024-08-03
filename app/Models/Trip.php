@@ -16,4 +16,24 @@ class Trip extends Model
         'departure_time',
         'stock'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
+
+    public function tripEntries()
+    {
+        return $this->hasMany(TripEntry::class);
+    }
+
+    public function getDriverAttribute()
+    {
+        return $this->user;
+    }
 }

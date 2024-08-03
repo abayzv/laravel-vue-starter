@@ -3,23 +3,26 @@ import DefaultLayout from '@/Layouts/DefaultLayout.vue';
 import Datatable from '@/Components/Datatable/Index.vue';
 import { Head } from '@inertiajs/vue3';
 import type { DatatableOptions } from '@/types/datatable';
-import { computed, PropType } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     data: Object,
+    filters: Object,
 })
 
 const data = computed(() => {
     return {
         data: props.data?.data,
-        column: ['name', 'role', 'created_at'],
+        column: ['driver', 'stock', 'departure_date', 'departure_time', 'vehicle'],
         labels: {
-            name: 'Nama',
-            role: 'Role',
-            created_at: 'Tanggal Pembuatan'
+            driver: 'Driver',
+            departure_date: 'Tanggal Berangkat',
+            departure_time: 'Jam Berangkat',
+            vehicle: 'Kendaraan'
         },
         format: {
-            created_at: (val: any) => new Date(val).toLocaleDateString()
+            driver: (val: any) => val.name,
+            vehicle: (val: any) => val.name
         },
         actions: [
             {
@@ -35,20 +38,21 @@ const data = computed(() => {
         ],
         links: props.data?.links,
         meta: props.data?.meta,
+        filters: props.filters
     } as DatatableOptions
 })
 </script>
 
 <template>
 
-    <Head title="Users" />
+    <Head title="Trips" />
 
     <DefaultLayout>
         <div class="py-6">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto sm:px-6 lg:px-8">
                 <Datatable :data="data">
                     <template #title>
-                        Management User
+                        Management Trip
                     </template>
                 </Datatable>
             </div>
