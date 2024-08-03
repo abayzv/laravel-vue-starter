@@ -3,7 +3,7 @@ import Button from 'primevue/button';
 </script>
 
 <template>
-    <div class="mt-5 space-y-3">
+    <div class="space-y-3">
         <div class="flex gap-5 items-end">
             <Button label="Primary" />
             <Button label="Secondary" severity="secondary" />

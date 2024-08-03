@@ -2,7 +2,7 @@
 <template>
     <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
         <!-- Header -->
-        <div v-if="$slots.header" class="border-b">
+        <div v-if="$slots.header" class="border-b p-2 sm:p-4">
             <slot name="header" />
         </div>
 
@@ -12,7 +12,7 @@
         </div>
 
         <!-- Footer -->
-        <div v-if="$slots.footer">
+        <div v-if="$slots.footer" class="border-t p-2 sm:p-4">
             <slot name="footer" />
         </div>
     </div>
