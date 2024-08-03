@@ -21,7 +21,7 @@ class TripEntryFactory extends Factory
             'outlet_id' => fake()->numberBetween(1, 10),
             'quantity' => fake()->numberBetween(10, 30),
             'price' => fake()->numberBetween(5000, 10000),
-            'isPaid' => fake()->boolean(),
+            'paid_status' => fake()->boolean(),
             'payment_method' => fake()->randomElement(['transfer', 'cash'])
         ];
     }

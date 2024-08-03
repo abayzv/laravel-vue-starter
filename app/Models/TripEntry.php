@@ -14,7 +14,7 @@ class TripEntry extends Model
         'outlet_id',
         'quantity',
         'price',
-        'isPaid',
+        'paid_status',
         'payment_method'
     ];
 }
