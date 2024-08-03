@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/design-system', function () {
         return Inertia::render('DesignSystem');
-    });
+    })->name('design-system');
 });
 
 require __DIR__ . '/auth.php';

@@ -31,6 +31,11 @@ const menu = [
         label: 'Profile',
         icon: 'mdi:account-circle',
         link: 'profile.edit'
+    },
+    {
+        label: 'Design System',
+        icon: 'mdi:airplane-edit',
+        link: 'design-system'
     }
 ]
 </script>
@@ -140,7 +145,7 @@ const menu = [
             <div class="flex-grow flex mt-[4rem]">
                 <!-- Sidebar -->
                 <aside
-                    :class="`w-[${state.sidebarCollapse ? '7rem' : '20rem'}] border-r bg-white dark:bg-gray-800 dark:border-gray-800 transition hidden sm:block`">
+                    :class="`w-[${state.sidebarCollapse ? '7rem' : '24rem'}] border-r bg-white dark:bg-gray-800 dark:border-gray-800 transition hidden sm:block`">
                     <div class="px-2 sm:px-4 lg:px-6 sticky top-[5.5rem]">
                         <ul class="my-5 space-y-2">
                             <li v-for="item in menu"
