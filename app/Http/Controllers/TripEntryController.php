@@ -18,6 +18,7 @@ class TripEntryController extends Controller
     public function index(Request $request)
     {
         $query = TripEntry::query();
+        $query->orderBy('created_at');
 
         if ($request->has('paid_status')) {
             $query->where('paid_status', $request->input('paid_status'));

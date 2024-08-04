@@ -21,7 +21,8 @@ class TripFactory extends Factory
             'departure_date' => fake()->date(),
             'departure_time' => fake()->time(),
             'stock' => fake()->numberBetween(200, 300),
-            'vehicle_id' => fake()->numberBetween(1, 5)
+            'vehicle_id' => fake()->numberBetween(1, 5),
+            'created_at' => fake()->dateTimeBetween('-30 days', 'now')
         ];
     }
 }

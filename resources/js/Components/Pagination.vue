@@ -24,18 +24,19 @@ const displayLinks = computed(() => {
     const currentPage = props.meta.current_page
     const lastPage = props.meta.last_page
 
-    let startPage = Math.max(currentPage - 3, 1)
-    let endPage = Math.min(currentPage + 3, lastPage)
+    const maxPagesToShow = 7
+    let startPage = Math.max(currentPage - Math.floor(maxPagesToShow / 2), 1)
+    let endPage = Math.min(startPage + maxPagesToShow - 1, lastPage)
 
-    if (endPage - startPage < 6) {
-        if (currentPage < 5) {
-            endPage = Math.min(startPage + 6, lastPage)
-        } else {
-            startPage = Math.max(endPage - 6, 1)
-        }
+    // Adjust startPage if endPage is less than maxPagesToShow
+    if (endPage - startPage + 1 < maxPagesToShow) {
+        startPage = Math.max(endPage - maxPagesToShow + 1, 1)
     }
 
-    return props.meta.links.slice(startPage, endPage + 1)
+    return props.meta.links.filter(link => {
+        const pageNumber = Number(new URL(link.url ?? '', props.meta.path).searchParams.get('page'))
+        return pageNumber >= startPage && pageNumber <= endPage
+    })
 })
 
 const changePage = (url: string | null) => {
@@ -69,24 +70,36 @@ const handleUpdatePerPage = (e: any) => {
                         <Icon icon="mdi:chevron-double-left" />
                     </a>
                 </li>
-                <li :class="{ 'disabled': !meta.links[0].url }" class="page-item">
+                <!-- <li :class="{ 'disabled': !meta.links[0].url }" class="page-item">
                     <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(meta.links[0].url)">
                         <Icon icon="mdi:chevron-left" />
                     </a>
-                </li>
+                </li> -->
+                <template v-for="(link, index) in displayLinks">
+                    <li v-if="link.label.includes('Next')" :class="{ 'active': link.active, 'disabled': !link.url }"
+                        class="page-item">
+                        <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(link.url)">
+                            <Icon icon="mdi:chevron-right" />
+                        </a>
+                    </li>
+                    <li v-else-if="link.label.includes('Prev')"
+                        :class="{ 'active': link.active, 'disabled': !link.url }" class="page-item">
+                        <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(link.url)">
+                            <Icon icon="mdi:chevron-left" />
+                        </a>
+                    </li>
+                    <li v-else :class="{ 'active': link.active, 'disabled': !link.url }" class="page-item">
+                        <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(link.url)"
+                            v-html="link.label"></a>
+                    </li>
+                </template>
 
-                <li v-for="link in displayLinks" :key="link.label"
-                    :class="{ 'active': link.active, 'disabled': !link.url }" class="page-item">
-                    <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(link.url)"
-                        v-html="link.label"></a>
-                </li>
-
-                <li :class="{ 'disabled': !meta.links[meta.links.length - 1].url }" class="page-item">
+                <!-- <li :class="{ 'disabled': !meta.links[meta.links.length - 1].url }" class="page-item">
                     <a class="page-link bg-gray-50 dark:bg-gray-700"
                         @click.prevent="changePage(meta.links[meta.links.length - 1].url)">
                         <Icon icon="mdi:chevron-right" />
                     </a>
-                </li>
+                </li> -->
                 <li :class="{ 'disabled': !links.last }" class="page-item">
                     <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.last)">
                         <Icon icon="mdi:chevron-double-right" />

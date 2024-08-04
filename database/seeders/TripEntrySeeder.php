@@ -13,6 +13,6 @@ class TripEntrySeeder extends Seeder
      */
     public function run(): void
     {
-        TripEntry::factory(100)->create();
+        TripEntry::factory(250)->create();
     }
 }

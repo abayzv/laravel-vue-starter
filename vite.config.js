@@ -18,4 +18,7 @@ export default defineConfig({
             },
         })
     ],
+    optimizeDeps: {
+        exclude: ['vue3-apexcharts']
+      }
 });
