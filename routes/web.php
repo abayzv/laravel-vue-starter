@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TripController;
@@ -20,9 +21,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['can:view dashboard']], function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 });
 
 Route::group(['middleware' => ['can:view user', 'can:delete user']], function () {
