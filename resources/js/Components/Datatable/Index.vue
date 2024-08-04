@@ -45,7 +45,8 @@ const handleUpdatePage = (evt: any) => {
             <h1 class="font-bold text-xl">
                 <slot name="title" />
             </h1>
-            <DatatableFilter :filters="props.data?.filters" />
+            <DatatableFilter v-if="Object.keys(props.data?.filters?.data || {}).length"
+                :filters="props.data?.filters" />
         </div>
 
         <!-- Body -->
