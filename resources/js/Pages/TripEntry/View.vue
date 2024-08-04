@@ -15,9 +15,10 @@ const props = defineProps({
 const data = computed(() => {
     return {
         data: props.data?.data,
-        column: ['outlet', 'quantity', 'price', 'total', 'paid_status', 'payment_method', 'created_at'],
+        column: ['outlet', 'driver', 'quantity', 'price', 'total', 'paid_status', 'payment_method', 'created_at'],
         labels: {
             outlet: 'Nama Outlet',
+            driver: 'Driver',
             quantity: 'Stock Terjual',
             price: 'Harga',
             total: 'Total',
@@ -27,6 +28,7 @@ const data = computed(() => {
         },
         format: {
             outlet: (val: any) => val.name,
+            driver: (val: any, item: any) => item.trip.driver.name,
             price: (val: any) => `Rp. ${Number(val).toLocaleString()}`,
             total: (val: any, item: any) => `Rp. ${(Number(item.quantity) * Number(item.price)).toLocaleString()}`,
             paid_status: (val: any) => {

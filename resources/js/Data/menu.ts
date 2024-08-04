@@ -15,6 +15,11 @@ const menu = [
         link: 'outlet.view'
     },
     {
+        label: 'Manage Vehicles',
+        icon: 'mdi:car',
+        link: 'vehicle.view'
+    },
+    {
         label: 'Trips',
         icon: 'mdi:truck-delivery',
         link: 'trip.view'

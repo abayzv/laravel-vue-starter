@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\TripEntryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,6 +39,10 @@ Route::group(['middleware' => ['can:view trip entry', 'can:delete trip entry']],
 
 Route::group(['middleware' => ['can:view outlet', 'can:delete outlet']], function () {
     Route::get('/outlets', [OutletController::class, 'index'])->middleware(['auth', 'verified'])->name('outlet.view');
+});
+
+Route::group(['middleware' => ['can:view vehicle', 'can:delete vehicle']], function () {
+    Route::get('/vehicles', [VehicleController::class, 'index'])->middleware(['auth', 'verified'])->name('vehicle.view');
 });
 
 Route::middleware('auth')->group(function () {

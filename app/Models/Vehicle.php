@@ -13,4 +13,9 @@ class Vehicle extends Model
         'name',
         'license_plate'
     ];
+
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
+    }
 }
