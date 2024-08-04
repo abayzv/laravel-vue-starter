@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateOutletRequest;
 use App\Http\Resources\OutletResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Nette\Utils\Strings;
 
 class OutletController extends Controller
 {
@@ -16,20 +17,24 @@ class OutletController extends Controller
      */
     public function index(Request $request)
     {
+        $searchBy = $request->input('search_by');
+        $searchQuery = $request->input('query');
+
         $query = Outlet::query();
 
-        // Filter berdasarkan user_id
-        // if ($request->has('user_id')) {
-        //     $query->where('user_id', $request->input('user_id'));
-        // }
+        if ($searchBy && $query) {
+            $query->where($searchBy, 'like', '%' . $searchQuery . '%');
+        }
 
-        // Pagination
-        $perPage = $request->input('per_page', 10); // Default 10 per halaman
+        $perPage = $request->input('per_page', 10);
         $outlet = $query->paginate($perPage);
 
         return Inertia::render('Outlet/View', [
             'data' => OutletResource::collection($outlet),
             'filters' => [],
+            'search' => [
+                'data' => $request->all()
+            ]
         ]);
     }
 

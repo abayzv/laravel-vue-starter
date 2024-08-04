@@ -5,10 +5,11 @@ import DatatableHeader from '@/Components/Datatable/Header.vue'
 import DatatableData from '@/Components/Datatable/Data.vue'
 import DatatableFilter from '@/Components/Datatable/Filter.vue'
 import SplitButton from 'primevue/splitbutton';
-import { PropType } from 'vue';
+import { PropType, reactive, ref, watch } from 'vue';
 import { DatatableOptions } from '@/types/datatable';
 import Pagination from '@/Components/Pagination.vue';
 import { router } from '@inertiajs/vue3'
+import Search from '@/Components/Search.vue';
 
 const props = defineProps({
     data: {
@@ -16,6 +17,8 @@ const props = defineProps({
         required: true
     }
 })
+
+const searchValue = ref()
 
 const formatValue = (value: any, key: any, item: any) => {
     if (props.data?.format && typeof props.data?.format[key] === 'function') {
@@ -36,17 +39,26 @@ const handleUpdatePage = (evt: any) => {
     router.visit(evt)
 }
 
+watch(() => searchValue.value, (val) => {
+    router.get('', val)
+}, { deep: true })
 </script>
 
 <template>
     <div class="bg-white dark:bg-gray-800 shadow rounded-lg sm:rounded-lg">
         <!-- Header -->
         <div class="border-b dark:border-b-gray-700 flex items-center justify-between p-5">
-            <h1 class="font-bold text-xl">
-                <slot name="title" />
-            </h1>
-            <DatatableFilter v-if="Object.keys(props.data?.filters?.data || {}).length"
-                :filters="props.data?.filters" />
+            <div>
+                <h1 class="font-bold text-xl">
+                    <slot name="title" />
+                </h1>
+            </div>
+            <div class="flex gap-2">
+                <Search v-if="props.data?.search" v-model="searchValue" :name="props.data?.search?.name"
+                    :options="props.data?.search?.options" :default="props.data?.search.default" />
+                <DatatableFilter v-if="Object.keys(props.data?.filters?.data || {}).length"
+                    :filters="props.data?.filters" />
+            </div>
         </div>
 
         <!-- Body -->

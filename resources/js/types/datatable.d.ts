@@ -34,6 +34,18 @@ export interface Action {
     command: (item: any) => void
 }
 
+export interface Search {
+    default: {
+        search_by: string,
+        query: any
+    }
+    name?: string
+    options?: {
+        label: string,
+        value: string
+    }[]
+}
+
 export interface DatatableOptions {
     column: string[],
     labels: Data,
@@ -42,5 +54,6 @@ export interface DatatableOptions {
     actions?: Action[],
     links: Links,
     meta: Meta,
-    filters?: Filter
+    filters?: Filter,
+    search?: Search
 }
