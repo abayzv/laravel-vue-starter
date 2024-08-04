@@ -16,20 +16,24 @@ class VehicleController extends Controller
      */
     public function index(Request $request)
     {
+        $searchBy = $request->input('search_by');
+        $searchQuery = $request->input('query');
+
         $query = Vehicle::query();
 
-        // Filter berdasarkan user_id
-        // if ($request->has('user_id')) {
-        //     $query->where('user_id', $request->input('user_id'));
-        // }
+        if ($searchBy && $query) {
+            $query->where($searchBy, 'like', '%' . $searchQuery . '%');
+        }
 
-        // Pagination
-        $perPage = $request->input('per_page', 10); // Default 10 per halaman
+        $perPage = $request->input('per_page', 10);
         $outlet = $query->paginate($perPage);
 
         return Inertia::render('Vehicle/View', [
             'data' => VehicleResource::collection($outlet),
             'filters' => [],
+            'search' => [
+                'data' => $request->all()
+            ]
         ]);
     }
 

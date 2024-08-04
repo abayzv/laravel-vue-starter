@@ -16,21 +16,24 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // $users = User::with('roles')->paginate(10);
+        $searchBy = $request->input('search_by');
+        $searchQuery = $request->input('query');
+
         $query = User::query();
 
-        // Filter berdasarkan user_id
+        if ($searchBy && $query) {
+            $query->where($searchBy, 'like', '%' . $searchQuery . '%');
+        }
+
         if ($request->has('role_id')) {
             $roleId = $request->input('role_id');
-            $roleName = Role::findById($roleId)->name; // Dapatkan nama peran dari ID
+            $roleName = Role::findById($roleId)->name;
             $query->role($roleName);
         }
 
-        // Pagination
-        $perPage = $request->input('per_page', 10); // Default 10 per halaman
+        $perPage = $request->input('per_page', 10);
         $users = $query->paginate($perPage);
 
-        // Select-data
         $filtersData = [
             "role" => [
                 "label" => "Role",
@@ -46,6 +49,9 @@ class UserController extends Controller
                 "data" => $filtersData,
                 "default" => $request->all()
             ],
+            'search' => [
+                'data' => $request->all()
+            ]
         ]);
     }
 

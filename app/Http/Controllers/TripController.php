@@ -18,27 +18,32 @@ class TripController extends Controller
      */
     public function index(Request $request)
     {
+        $searchBy = $request->input('search_by');
+        $searchQuery = $request->input('query');
+
         $query = Trip::query();
 
-        // Filter berdasarkan user_id
+        if ($searchBy === 'driver_name' && $searchQuery) {
+            $query->whereHas('user', function ($q) use ($searchQuery) {
+                $q->where('name', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
         if ($request->has('user_id')) {
             $query->where('user_id', $request->input('user_id'));
         }
 
-        // Filter berdasarkan vehicle_id
         if ($request->has('vehicle_id')) {
             $query->where('vehicle_id', $request->input('vehicle_id'));
         }
-        // Filter berdasarkan vehicle_id
+
         if ($request->has('departure_date')) {
             $query->where('departure_date', $request->input('departure_date'));
         }
 
-        // Pagination
-        $perPage = $request->input('per_page', 10); // Default 10 per halaman
+        $perPage = $request->input('per_page', 10);
         $trips = $query->paginate($perPage);
 
-        // Select-data
         $filtersData = [
             "user" => [
                 "label" => "Driver",
@@ -65,6 +70,9 @@ class TripController extends Controller
                 "data" => $filtersData,
                 "default" => $request->all()
             ],
+            'search' => [
+                'data' => $request->all()
+            ]
         ]);
     }
 

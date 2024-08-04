@@ -39,9 +39,13 @@ const handleUpdatePage = (evt: any) => {
     router.visit(evt)
 }
 
-watch(() => searchValue.value, (val) => {
-    router.get('', val)
-}, { deep: true })
+const onSubmitSearch = () => {
+    router.get('', searchValue.value)
+}
+
+// watch(() => searchValue.value, (val) => {
+//     router.get('', val)
+// }, { deep: true })
 </script>
 
 <template>
@@ -55,7 +59,8 @@ watch(() => searchValue.value, (val) => {
             </div>
             <div class="flex gap-2">
                 <Search v-if="props.data?.search" v-model="searchValue" :name="props.data?.search?.name"
-                    :options="props.data?.search?.options" :default="props.data?.search.default" />
+                    :options="props.data?.search?.options" :default="props.data?.search.default"
+                    @submit="onSubmitSearch" :interval="0" />
                 <DatatableFilter v-if="Object.keys(props.data?.filters?.data || {}).length"
                     :filters="props.data?.filters" />
             </div>

@@ -17,8 +17,23 @@ class TripEntryController extends Controller
      */
     public function index(Request $request)
     {
+        $searchBy = $request->input('search_by');
+        $searchQuery = $request->input('query');
+
         $query = TripEntry::query();
         $query->orderBy('created_at');
+
+        if ($searchBy === 'outlet_name' && $searchQuery) {
+            $query->whereHas('outlet', function ($q) use ($searchQuery) {
+                $q->where('name', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
+        if ($searchBy === 'driver_name' && $searchQuery) {
+            $query->whereHas('trip.user', function ($q) use ($searchQuery) {
+                $q->where('name', 'like', '%' . $searchQuery . '%');
+            });
+        }
 
         if ($request->has('paid_status')) {
             $query->where('paid_status', $request->input('paid_status'));
@@ -29,10 +44,9 @@ class TripEntryController extends Controller
             $query->where('payment_method', $request->input('payment_method'));
         }
 
-        $perPage = $request->input('per_page', 10); // Default 10 per halaman
+        $perPage = $request->input('per_page', 10);
         $trips = $query->paginate($perPage);
 
-        // Select-data
         $filtersData = [
             "paid_status" => [
                 "label" => "Status Pembayaran",
@@ -87,6 +101,9 @@ class TripEntryController extends Controller
                 "data" => $filtersData,
                 "default" => $request->all()
             ],
+            'search' => [
+                'data' => $request->all()
+            ]
         ]);
     }
 

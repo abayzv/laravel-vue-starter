@@ -10,6 +10,7 @@ import formatDate from '@/Utils/formatDate';
 const props = defineProps({
     data: Object,
     filters: Object,
+    search: Object
 })
 
 const data = computed(() => {
@@ -56,7 +57,23 @@ const data = computed(() => {
         ],
         links: props.data?.links,
         meta: props.data?.meta,
-        filters: props.filters
+        filters: props.filters,
+        search: {
+            default: {
+                search_by: props.search?.data.search_by || '',
+                query: props.search?.data.query
+            },
+            options: [
+                {
+                    label: 'Outlet',
+                    value: 'outlet_name'
+                },
+                {
+                    label: 'Driver',
+                    value: 'driver_name'
+                }
+            ]
+        }
     } as DatatableOptions
 })
 </script>

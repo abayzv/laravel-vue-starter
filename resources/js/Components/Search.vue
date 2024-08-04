@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, onUpdated, ref } from 'vue';
+import Button from 'primevue/button';
+import { onMounted, ref } from 'vue';
 
 const props = withDefaults(defineProps<{
     name: string,
@@ -11,12 +12,14 @@ const props = withDefaults(defineProps<{
     default: {
         search_by: string,
         query: any
-    }
+    },
+    interval: number
 }>(), {
-    name: 'query'
+    name: 'query',
+    interval: 700
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'submit'])
 
 const searchBy = ref(props.default?.search_by || props.options?.[0].value || props.name)
 const inputValue = ref(props.default?.query)
@@ -32,12 +35,16 @@ const debounce = (func: (...args: any[]) => void, wait: number) => {
 
 const handleUpdate = debounce((e: any) => {
     emit('update:modelValue', { search_by: searchBy.value, query: e.target.value })
-}, 300);
+}, props.interval);
 
 const handleInput = (e: Event) => {
     const target = e.target as HTMLInputElement;
     inputValue.value = target.value;
     handleUpdate(e);
+}
+
+const handleSubmit = (e: any) => {
+    emit('submit')
 }
 
 onMounted(() => {
@@ -50,12 +57,16 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex border rounded-lg overflow-clip w-full">
-        <select v-if="options?.length" v-model="searchBy"
-            class="border-none focus:border-none focus:ring-0 focus:outline-none bg-gray-50">
-            <option v-for="item in options" :value="item.value">{{ item.label }}</option>
-        </select>
-        <input ref="inputRef" :value="inputValue" @input="handleInput"
-            class="border-none focus:border-none focus:ring-0 focus:outline-none" placeholder="Search..." type="text" />
-    </div>
+    <form @submit.prevent="handleSubmit" class="flex gap-2">
+        <div class="flex border rounded-lg overflow-clip w-full">
+            <select v-if="options?.length" v-model="searchBy"
+                class="border-none focus:border-none focus:ring-0 focus:outline-none bg-gray-50">
+                <option v-for="item in options" :value="item.value">{{ item.label }}</option>
+            </select>
+            <input ref="inputRef" :value="inputValue" @input="handleInput"
+                class="border-none focus:border-none focus:ring-0 focus:outline-none" placeholder="Search..."
+                type="text" />
+        </div>
+        <Button @click="handleSubmit" icon="pi pi-search" size="small" severity="secondary" />
+    </form>
 </template>

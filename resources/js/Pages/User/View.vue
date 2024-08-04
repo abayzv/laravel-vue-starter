@@ -8,6 +8,7 @@ import { computed, PropType } from 'vue';
 const props = defineProps({
     data: Object,
     filters: Object,
+    search: Object
 })
 
 const data = computed(() => {
@@ -48,7 +49,19 @@ const data = computed(() => {
         ],
         links: props.data?.links,
         meta: props.data?.meta,
-        filters: props.filters
+        filters: props.filters,
+        search: {
+            default: {
+                search_by: props.search?.data.search_by || '',
+                query: props.search?.data.query
+            },
+            options: [
+                {
+                    label: 'Nama',
+                    value: 'name'
+                }
+            ]
+        }
     } as DatatableOptions
 })
 </script>
