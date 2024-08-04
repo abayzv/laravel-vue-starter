@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
@@ -12,6 +12,14 @@ const showingNavigationDropdown = ref(false);
 const state = reactive({
     sidebarCollapse: false,
     isDark: false
+})
+
+const sidebarClass = computed(() => {
+    if (state.sidebarCollapse) {
+        return 'w-[6.5rem] border-r bg-white dark:bg-gray-800 dark:border-gray-800 transition hidden sm:block'
+    } else {
+        return 'w-[24rem] border-r bg-white dark:bg-gray-800 dark:border-gray-800 transition hidden sm:block'
+    }
 })
 
 const toggleDark = () => {
@@ -127,8 +135,7 @@ const toggleSidebar = () => {
 
             <div class="flex-grow flex mt-[4rem]">
                 <!-- Sidebar -->
-                <aside
-                    :class="`w-[24rem] border-r bg-white dark:bg-gray-800 dark:border-gray-800 transition hidden sm:block`">
+                <aside :class="sidebarClass">
                     <div class="px-2 sm:px-4 lg:px-6 sticky top-[5.5rem]">
                         <ul class="my-5 space-y-2">
                             <li v-for="item in menu"
