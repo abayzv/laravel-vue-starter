@@ -19,18 +19,51 @@ class TripEntryController extends Controller
     {
         $query = TripEntry::query();
 
-        // Filter berdasarkan user_id
         if ($request->has('paid_status')) {
             $query->where('paid_status', $request->input('paid_status'));
         }
 
-        // Pagination
+        if ($request->has('payment_method')) {
+            $query->where('paid_status', 1);
+            $query->where('payment_method', $request->input('payment_method'));
+        }
+
         $perPage = $request->input('per_page', 10); // Default 10 per halaman
         $trips = $query->paginate($perPage);
 
         // Select-data
         $filtersData = [
-            "user" => [
+            "paid_status" => [
+                "label" => "Status Pembayaran",
+                "name" => "paid_status",
+                "type" => 'select',
+                "data" => [
+                    [
+                        "label" => "Belum dibayar",
+                        "value" => 0
+                    ],
+                    [
+                        "label" => "Lunas",
+                        "value" => 1
+                    ],
+                ],
+            ],
+            "payment_method" => [
+                "label" => "Jenis Pembayaran",
+                "name" => "payment_method",
+                "type" => 'select',
+                "data" => [
+                    [
+                        "label" => "Transfer",
+                        "value" => "transfer"
+                    ],
+                    [
+                        "label" => "Cash",
+                        "value" => "cash"
+                    ],
+                ],
+            ],
+            "paid_status" => [
                 "label" => "Status Pembayaran",
                 "name" => "paid_status",
                 "type" => 'select',
