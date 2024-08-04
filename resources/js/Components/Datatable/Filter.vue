@@ -6,6 +6,7 @@ import { PropType, watch } from "vue";
 import { ref } from "vue";
 import type { Filters } from "@/types/datatable";
 import { router } from '@inertiajs/vue3'
+import SelectButton from 'primevue/selectbutton';
 
 const props = defineProps({
     filters: {
@@ -55,9 +56,14 @@ const handleUpdateSelect = (e: any, target: any) => {
                             {{ data.label }}
                         </option>
                     </select>
-                    <input v-else type="date" :value="filters.default[item.name]"
+                    <input v-else-if="item.type === 'date'" type="date" :value="filters.default[item.name]"
                         @change="(e) => handleUpdateSelect(e, item.name)"
                         class="w-full rounded border-gray-300 focus:ring-0 focus:outline-none focus:border-gray-400" />
+                    <!-- <div v-else-if="item.type === 'option'" class="flex gap-2 bg-gray-100 p-2">
+                        <button v-for="option in item.data" type="button"
+                            class="bg-gray-500 py-2 px-5 text-white rounded-lg text-sm w-full">{{ option.label
+                            }}</button>
+                    </div> -->
                 </div>
                 <div class="flex gap-2">
                     <Button class="w-full" type="button" size="small" icon="pi pi-filter" label="Submit"

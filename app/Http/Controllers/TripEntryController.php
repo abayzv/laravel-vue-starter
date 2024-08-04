@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\TripEntry;
 use App\Http\Requests\StoreTripEntryRequest;
 use App\Http\Requests\UpdateTripEntryRequest;
-use App\Http\Resources\TripResource;
+use App\Http\Resources\TripEntryResource;
+use App\Services\SelectDataService;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class TripEntryController extends Controller
@@ -13,9 +15,45 @@ class TripEntryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = TripEntry::query();
+
+        // Filter berdasarkan user_id
+        if ($request->has('paid_status')) {
+            $query->where('paid_status', $request->input('paid_status'));
+        }
+
+        // Pagination
+        $perPage = $request->input('per_page', 10); // Default 10 per halaman
+        $trips = $query->paginate($perPage);
+
+        // Select-data
+        $filtersData = [
+            "user" => [
+                "label" => "Status Pembayaran",
+                "name" => "paid_status",
+                "type" => 'select',
+                "data" => [
+                    [
+                        "label" => "Belum dibayar",
+                        "value" => 0
+                    ],
+                    [
+                        "label" => "Lunas",
+                        "value" => 1
+                    ],
+                ],
+            ],
+        ];
+
+        return Inertia::render('TripEntry/View', [
+            'data' => TripEntryResource::collection($trips),
+            'filters' => [
+                "data" => $filtersData,
+                "default" => $request->all()
+            ],
+        ]);
     }
 
     /**

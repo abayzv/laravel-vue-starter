@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TripController;
+use App\Http\Controllers\TripEntryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,10 @@ Route::group(['middleware' => ['can:view user', 'can:delete user']], function ()
 
 Route::group(['middleware' => ['can:view trip', 'can:delete trip']], function () {
     Route::get('/trips', [TripController::class, 'index'])->middleware(['auth', 'verified'])->name('trip.view');
+});
+
+Route::group(['middleware' => ['can:view trip entry', 'can:delete trip']], function () {
+    Route::get('/trip-entries', [TripEntryController::class, 'index'])->middleware(['auth', 'verified'])->name('trip-entries.view');
 });
 
 Route::middleware('auth')->group(function () {

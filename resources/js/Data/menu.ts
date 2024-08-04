@@ -14,6 +14,11 @@ const menu = [
         icon: 'mdi:truck-delivery',
         link: 'trip.view'
     },
+    {
+        label: 'Drop List',
+        icon: 'mdi:receipt-text',
+        link: 'trip-entries.view'
+    },
     // {
     //     label: 'Profile',
     //     icon: 'mdi:account-circle',

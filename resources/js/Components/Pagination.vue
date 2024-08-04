@@ -64,11 +64,11 @@ const handleUpdatePerPage = (e: any) => {
                 </option>
             </select>
             <ul class="pagination">
-                <!-- <li :class="{ 'disabled': !links.first }" class="page-item">
-                <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.first)">
-                    <Icon icon="mdi:chevron-double-left" />
-                </a>
-            </li> -->
+                <li :class="{ 'disabled': !links.first }" class="page-item">
+                    <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.first)">
+                        <Icon icon="mdi:chevron-double-left" />
+                    </a>
+                </li>
                 <li :class="{ 'disabled': !meta.links[0].url }" class="page-item">
                     <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(meta.links[0].url)">
                         <Icon icon="mdi:chevron-left" />
@@ -87,11 +87,11 @@ const handleUpdatePerPage = (e: any) => {
                         <Icon icon="mdi:chevron-right" />
                     </a>
                 </li>
-                <!-- <li :class="{ 'disabled': !links.last }" class="page-item">
-                <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.last)">
-                    <Icon icon="mdi:chevron-double-right" />
-                </a>
-            </li> -->
+                <li :class="{ 'disabled': !links.last }" class="page-item">
+                    <a class="page-link bg-gray-50 dark:bg-gray-700" @click.prevent="changePage(links.last)">
+                        <Icon icon="mdi:chevron-double-right" />
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

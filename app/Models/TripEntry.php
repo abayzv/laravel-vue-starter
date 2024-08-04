@@ -17,4 +17,14 @@ class TripEntry extends Model
         'paid_status',
         'payment_method'
     ];
+
+    public function trip()
+    {
+        return $this->belongsTo(Trip::class);
+    }
+
+    public function outlet()
+    {
+        return $this->belongsTo(Outlet::class);
+    }
 }
