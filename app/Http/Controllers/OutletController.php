@@ -5,15 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Outlet;
 use App\Http\Requests\StoreOutletRequest;
 use App\Http\Requests\UpdateOutletRequest;
+use App\Http\Resources\OutletResource;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class OutletController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Outlet::query();
+
+        // Filter berdasarkan user_id
+        // if ($request->has('user_id')) {
+        //     $query->where('user_id', $request->input('user_id'));
+        // }
+
+        // Pagination
+        $perPage = $request->input('per_page', 10); // Default 10 per halaman
+        $outlet = $query->paginate($perPage);
+
+        return Inertia::render('Outlet/View', [
+            'data' => OutletResource::collection($outlet),
+            'filters' => [],
+        ]);
     }
 
     /**

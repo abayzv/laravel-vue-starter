@@ -10,6 +10,11 @@ const menu = [
         link: 'user.view'
     },
     {
+        label: 'Manage Outlets',
+        icon: 'mdi:store',
+        link: 'outlet.view'
+    },
+    {
         label: 'Trips',
         icon: 'mdi:truck-delivery',
         link: 'trip.view'

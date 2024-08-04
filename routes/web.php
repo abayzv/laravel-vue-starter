@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OutletController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\TripEntryController;
@@ -31,8 +32,12 @@ Route::group(['middleware' => ['can:view trip', 'can:delete trip']], function ()
     Route::get('/trips', [TripController::class, 'index'])->middleware(['auth', 'verified'])->name('trip.view');
 });
 
-Route::group(['middleware' => ['can:view trip entry', 'can:delete trip']], function () {
+Route::group(['middleware' => ['can:view trip entry', 'can:delete trip entry']], function () {
     Route::get('/trip-entries', [TripEntryController::class, 'index'])->middleware(['auth', 'verified'])->name('trip-entries.view');
+});
+
+Route::group(['middleware' => ['can:view outlet', 'can:delete outlet']], function () {
+    Route::get('/outlets', [OutletController::class, 'index'])->middleware(['auth', 'verified'])->name('outlet.view');
 });
 
 Route::middleware('auth')->group(function () {

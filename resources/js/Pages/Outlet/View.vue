@@ -1,0 +1,61 @@
+<script setup lang="ts">
+import DefaultLayout from '@/Layouts/DefaultLayout.vue';
+import Datatable from '@/Components/Datatable/Index.vue';
+import { Head } from '@inertiajs/vue3';
+import type { DatatableOptions } from '@/types/datatable';
+import { computed } from 'vue';
+import formatDate from '@/Utils/formatDate';
+
+const props = defineProps({
+    data: Object,
+    filters: Object,
+})
+
+const data = computed(() => {
+    return {
+        data: props.data?.data,
+        column: ['name', 'phone', 'address', 'created_at'],
+        labels: {
+            name: 'Nama',
+            phone: 'Nomor HP',
+            address: 'Alamat',
+            created_at: 'Tanggal Pembuatan'
+        },
+        format: {
+            created_at: (val: any) => formatDate(val)
+        },
+        actions: [
+            {
+                label: 'Edit',
+                icon: 'pi pi-pen-to-square',
+                command: (item: any) => { console.log(item) }
+            },
+            {
+                label: 'Delete',
+                icon: 'pi pi-trash',
+                command: (item: any) => { console.log(item) }
+            }
+        ],
+        links: props.data?.links,
+        meta: props.data?.meta,
+        filters: props.filters
+    } as DatatableOptions
+})
+</script>
+
+<template>
+
+    <Head title="Outlet" />
+
+    <DefaultLayout>
+        <div class="py-6">
+            <div class="mx-auto sm:px-6 lg:px-8">
+                <Datatable :data="data">
+                    <template #title>
+                        Management Outlet
+                    </template>
+                </Datatable>
+            </div>
+        </div>
+    </DefaultLayout>
+</template>
