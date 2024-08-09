@@ -151,7 +151,7 @@ watch(() => filter.value.driverDropChart.driver_month, (val) => {
 
                 <div class="grid grid-cols-4 gap-5 mt-5">
                     <!-- Trip Entry Chart -->
-                    <Card class="col-span-3">
+                    <Card class="col-span-4">
                         <div class="flex items-center justify-between mb-5">
                             <h2 class="text-lg font-bold">Drop List Graph</h2>
                             <div class="flex gap-2">
@@ -164,22 +164,6 @@ watch(() => filter.value.driverDropChart.driver_month, (val) => {
                         <apexchart width="100%" height="450" type="bar" :options="tripEntryChartOption.options"
                             :series="tripEntryChartOption.series"></apexchart>
                     </Card>
-                    <!-- Driver Drop Chart -->
-                    <!-- <Card>
-                        <div class="flex items-center justify-between mb-5">
-                            <h2 class="text-lg font-bold">Driver Performance Graph</h2>
-                            <div class="flex gap-2">
-                                <DatePicker v-if="filter.driverDropChart.driver_filter === 'monthly'"
-                                    v-model="filter.driverDropChart.driver_month" showIcon view="month"
-                                    dateFormat="yy-mm">
-                                </DatePicker>
-                                <Option v-model="filter.driverDropChart.driver_filter"
-                                    :options="state.tripEntryChartFilter" />
-                            </div>
-                        </div>
-                        <apexchart width="100%" type="bar" :options="driverDropChartOption.options"
-                            :series="driverDropChartOption.series"></apexchart>
-                    </Card> -->
                 </div>
             </div>
         </div>
